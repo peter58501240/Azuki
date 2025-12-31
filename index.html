@@ -35,22 +35,9 @@
     <script type="text/babel">
         const { useState } = React;
 
-        // --- 圖示元件庫 (內建 SVG 以取代 lucide-react import) ---
+        // --- 圖示元件庫 ---
         const Icon = ({ children, size = 24, className = "" }) => (
-            <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                width={size} 
-                height={size} 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="2" 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                className={className}
-            >
-                {children}
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
         );
 
         const Plane = (props) => <Icon {...props}><path d="M2 12h20"/><path d="M13 2l9 10-9 10"/></Icon>;
@@ -68,24 +55,17 @@
         const Train = (props) => <Icon {...props}><rect width="16" height="16" x="4" y="3" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m18 22-2-3"/><path d="M8 15h0"/><path d="M16 15h0"/></Icon>;
         const Sun = (props) => <Icon {...props}><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></Icon>;
         const Navigation = (props) => <Icon {...props}><polygon points="3 11 22 2 13 21 11 13 3 11"/></Icon>;
+        const Star = (props) => <Icon {...props}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></Icon>;
 
         // --- 主應用程式 ---
         const ItineraryApp = () => {
           const [activeDay, setActiveDay] = useState(1);
-          const [expandedItems, setExpandedItems] = useState({});
-
-          const toggleItem = (id) => {
-            setExpandedItems(prev => ({
-              ...prev,
-              [id]: !prev[id]
-            }));
-          };
 
           const tripInfo = {
             title: "岡山倉敷 5 天 4 夜．輕旅",
             date: "2026/01/27 (二) ～ 01/31 (六)",
             hotel: "VIA INN Okayama (岡山站直結)",
-            hotelMapQuery: "VIA INN Okayama", // 飯店導航關鍵字
+            hotelMapQuery: "VIA INN Okayama",
             days: [
               {
                 id: 1,
@@ -96,8 +76,20 @@
                   { time: "15:10", title: "利木津巴士 → 岡山站西口", subtitle: "約 30 分", icon: Train, type: "transport", 
                     note: "依時刻表發車，出關後直奔售票機買票 (備現金)", noteType: "warning" },
                   { time: "16:00", title: "VIA INN Check-in", subtitle: "車站樓上", icon: Home, type: "stay", mapQuery: "VIA INN Okayama" },
-                  { time: "17:00", title: "晚餐：小豆島拉麵 HISHIO", subtitle: "站前店", icon: Utensils, type: "food",
-                    detail: "位置：岡山站「東口」對面，過馬路就到。", mapQuery: "小豆島拉麵 HISHIO 岡山站前店" },
+                  { 
+                    time: "17:00", 
+                    title: "晚餐：小豆島拉麵 HISHIO", 
+                    subtitle: "站前店", 
+                    icon: Utensils, 
+                    type: "food",
+                    detail: "位置：岡山站「東口」對面，過馬路就到。",
+                    mapQuery: "小豆島拉麵 HISHIO 岡山站前店",
+                    // 備選方案
+                    backups: [
+                      { name: "隱岐之島拉麵", desc: "湯頭濃郁，評價極高", query: "隱岐の島ラーメン 岡山" },
+                      { name: "味司 野村", desc: "必吃多蜜醬豬排丼，老店", query: "味司 野村 岡山" }
+                    ]
+                  },
                   { time: "19:00", title: "散步：AEON Mall", subtitle: "超市買大罐水", icon: ShoppingBag, type: "activity", mapQuery: "AEON MALL Okayama" }
                 ]
               },
@@ -109,11 +101,34 @@
                   { time: "08:30", title: "路面電車 (東山線) → 城下站", icon: Train, type: "transport", mapQuery: "城下站 岡山" },
                   { time: "09:00", title: "後樂園 & 岡山城", icon: Camera, type: "activity",
                     note: "攻略：先逛庭園再進城，光線好、動線順。", noteType: "tip", mapQuery: "岡山後樂園" },
-                  { time: "12:30", title: "午餐：食堂 やまと (Yamato)", icon: Utensils, type: "food",
-                    note: "停損點：排隊 >30 分 → 轉身去表町商店街吃別的。", noteType: "warning", mapQuery: "食堂 やまと 岡山" },
+                  { 
+                    time: "12:30", 
+                    title: "午餐：食堂 やまと", 
+                    subtitle: "人氣排隊店",
+                    icon: Utensils, 
+                    type: "food",
+                    note: "停損點：排隊 >30 分 → 轉身去表町商店街吃別的。", 
+                    noteType: "warning", 
+                    mapQuery: "食堂 やまと 岡山",
+                    backups: [
+                      { name: "Cafe Moyau", desc: "河畔文青咖啡，氛圍超棒", query: "Cafe Moyau Okayama" },
+                      { name: "Cafe Antenna", desc: "後樂園旁，以聖代咖哩聞名", query: "Cafe Antenna Okayama" }
+                    ]
+                  },
                   { time: "14:00", title: "購物：表町商店街 & 天滿屋", icon: ShoppingBag, type: "activity", mapQuery: "岡山 天滿屋" },
                   { time: "16:30", title: "休息：回 VIA INN 卸貨抬腿", icon: Home, type: "stay", mapQuery: "VIA INN Okayama" },
-                  { time: "18:30", title: "晚餐：燒肉 ひだや (Hidaya)", subtitle: "建議預約", icon: Utensils, type: "food", mapQuery: "燒肉 ひだや 本町店" }
+                  { 
+                    time: "18:30", 
+                    title: "晚餐：燒肉 ひだや", 
+                    subtitle: "建議預約", 
+                    icon: Utensils, 
+                    type: "food", 
+                    mapQuery: "燒肉 ひだや 本町店",
+                    backups: [
+                      { name: "鳥好 (Torigina)", desc: "老字號居酒屋，評論破千", query: "Torigina Okayama" },
+                      { name: "燒肉 Chiwaya", desc: "千屋牛專賣，高品質", query: "Yakiniku Chiwaya Okayama" }
+                    ]
+                  }
                 ]
               },
               {
@@ -125,10 +140,32 @@
                   { time: "10:00", title: "大原美術館", subtitle: "務必上午去", icon: Camera, type: "activity", mapQuery: "大原美術館" },
                   { time: "11:15", title: "散策：倉敷美觀地區", icon: MapPin, type: "activity",
                     note: "注意：冬季平日遊船「高機率停駛」，平常心逛街。", noteType: "warning", mapQuery: "倉敷美觀地區" },
-                  { time: "12:30", title: "午餐：ふるいち 烏龍麵", icon: Utensils, type: "food", mapQuery: "ふるいち 仲店 倉敷" },
+                  { 
+                    time: "12:30", 
+                    title: "午餐：ふるいち 烏龍麵", 
+                    subtitle: "倉敷必吃",
+                    icon: Utensils, 
+                    type: "food", 
+                    mapQuery: "ふるいち 仲店 倉敷",
+                    backups: [
+                      { name: "三宅商店", desc: "古民家咖哩，超人氣文青店", query: "Miyake Shoten Kurashiki" },
+                      { name: "名代炸豬排 Kappa", desc: "評論破兩千，醬汁豬排", query: "Tonkatsu Kappa Kurashiki" }
+                    ]
+                  },
                   { time: "14:00", title: "購物：三井 Outlet", subtitle: "主戰場", icon: ShoppingBag, type: "activity", mapQuery: "三井 Outlet Park 倉敷" },
                   { time: "18:00", title: "補貨：Ario 1F 天滿屋超市", subtitle: "非伊藤洋華堂", icon: ShoppingBag, type: "activity", mapQuery: "Ario 倉敷" },
-                  { time: "19:00", title: "晚餐：鳥貴族 或 居酒屋", subtitle: "回岡山吃", icon: Utensils, type: "food", mapQuery: "鳥貴族 岡山" }
+                  { 
+                    time: "19:00", 
+                    title: "晚餐：鳥貴族", 
+                    subtitle: "回岡山吃", 
+                    icon: Utensils, 
+                    type: "food", 
+                    mapQuery: "鳥貴族 岡山",
+                    backups: [
+                      { name: "居酒屋 磯之澤", desc: "海鮮爐端燒，氣氛佳", query: "Isonosawa Okayama" },
+                      { name: "串兵衛", desc: "在地人氣串燒，評價高", query: "Kushibei Okayama" }
+                    ]
+                  }
                 ]
               },
               {
@@ -137,11 +174,44 @@
                 title: "採買 & 西口聖代",
                 events: [
                   { time: "10:30", title: "購物：Sansute 岡山", subtitle: "買吉備糰子伴手禮", icon: ShoppingBag, type: "activity", mapQuery: "Sansute Okayama" },
-                  { time: "11:30", title: "午餐：博多天婦羅 Takao", subtitle: "AEON 6F", icon: Utensils, type: "food", mapQuery: "博多天婦羅 Takao 岡山" },
+                  { 
+                    time: "11:30", 
+                    title: "午餐：博多天婦羅 Takao", 
+                    subtitle: "AEON 6F", 
+                    icon: Utensils, 
+                    type: "food", 
+                    mapQuery: "博多天婦羅 Takao 岡山",
+                    backups: [
+                      { name: "牛舌 仙台邊見", desc: "AEON內，厚切牛舌", query: "Sendai Henmi Okayama AEON" },
+                      { name: "海鮮三崎港", desc: "新鮮迴轉壽司", query: "Kaisen Misakiko Okayama AEON" }
+                    ]
+                  },
                   { time: "13:30", title: "購物：AEON Mall", subtitle: "Uniqlo/無印 最後衝刺", icon: ShoppingBag, type: "activity", mapQuery: "AEON MALL Okayama" },
-                  { time: "15:30", title: "午茶：觀音山水果聖代", icon: Coffee, type: "food",
-                    detail: "關鍵：在岡山站「西口」(奉還町)，不在 AEON 裡！", mapQuery: "觀音山水果聖代 岡山" },
-                  { time: "18:30", title: "晚餐：J's苑 (燒肉) 或 壽司郎", icon: Utensils, type: "food", mapQuery: "Js苑 岡山" }
+                  { 
+                    time: "15:30", 
+                    title: "午茶：觀音山水果聖代", 
+                    subtitle: "奉還町商店街",
+                    icon: Coffee, 
+                    type: "food",
+                    detail: "關鍵：在岡山站「西口」，不在 AEON 裡！", 
+                    mapQuery: "觀音山水果聖代 岡山",
+                    backups: [
+                      { name: "Cafe Signe", desc: "超美文青咖啡，蛋糕好吃", query: "Cafe Signe Okayama" },
+                      { name: "西山農場", desc: "AEON內，水果聖代名店", query: "Nishiyama Farm Fruit House Okayama" }
+                    ]
+                  },
+                  { 
+                    time: "18:30", 
+                    title: "晚餐：J's苑 (燒肉)", 
+                    subtitle: "高評價燒肉", 
+                    icon: Utensils, 
+                    type: "food", 
+                    mapQuery: "Js苑 岡山",
+                    backups: [
+                      { name: "壽司郎", desc: "穩定好吃，記得App預約", query: "Sushiro Okayama Station" },
+                      { name: "牛腸鍋 TASU", desc: "福岡風味，適合冬天", query: "Hakata Motsunabe TASU Okayama" }
+                    ]
+                  }
                 ]
               },
               {
@@ -150,7 +220,18 @@
                 title: "優雅回程",
                 events: [
                   { time: "10:00", title: "退房：行李寄放櫃台", icon: Home, type: "stay" },
-                  { time: "10:30", title: "早午餐：站內咖啡廳", icon: Coffee, type: "food", mapQuery: "Vie de France 岡山" },
+                  { 
+                    time: "10:30", 
+                    title: "早午餐：Vie de France", 
+                    subtitle: "站內麵包", 
+                    icon: Coffee, 
+                    type: "food", 
+                    mapQuery: "Vie de France 岡山",
+                    backups: [
+                      { name: "Starbucks", desc: "Sansute窗邊，景色好", query: "Starbucks Sansute Okayama" },
+                      { name: "Sun Station Cafe", desc: "站內早午餐方便", query: "Sun Station Terrace Okayama" }
+                    ]
+                  },
                   { time: "11:30", title: "最後補漏", subtitle: "站內藥妝/地下街", icon: ShoppingBag, type: "activity" },
                   { time: "12:00", title: "前往西口 21 號乘車處", subtitle: "取行李後出發", icon: Train, type: "transport", mapQuery: "岡山站西口 巴士" },
                   { time: "12:30", title: "機場巴士 (最早能搭班次)", icon: Train, type: "transport" },
@@ -245,7 +326,6 @@
                     <div className="relative pl-4 border-l-2 border-stone-100 space-y-8">
                       {day.events.map((event, index) => {
                         const EventIcon = event.icon;
-                        const isExpanded = expandedItems[`${day.id}-${index}`];
                         
                         return (
                           <div key={index} className="relative pl-6">
@@ -260,23 +340,22 @@
 
                             {/* Card */}
                             <div 
-                              onClick={() => (event.note || event.detail) && toggleItem(`${day.id}-${index}`)}
-                              className={`bg-white rounded-2xl p-4 border border-stone-100 shadow-sm transition-all active:scale-[0.99]
-                                ${(event.note || event.detail) ? 'cursor-pointer hover:shadow-md hover:border-rose-100' : ''}
-                              `}
+                              className="bg-white rounded-2xl p-4 border border-stone-100 shadow-sm transition-all hover:shadow-md"
                             >
                               <div className="flex items-start gap-3">
                                 <div className={`p-2.5 rounded-xl shrink-0 ${getTypeStyle(event.type)}`}>
                                   <EventIcon size={18} />
                                 </div>
                                 <div className="flex-1 min-w-0">
-                                  <h3 className="font-medium text-stone-800 leading-tight mb-1">{event.title}</h3>
+                                  <h3 className="font-medium text-stone-800 leading-tight mb-1">
+                                    {event.title}
+                                  </h3>
                                   {event.subtitle && <p className="text-sm text-stone-500">{event.subtitle}</p>}
                                 </div>
                                 
                                 <div className="flex items-center gap-2 shrink-0">
-                                  {/* Map Navigation Button */}
-                                  {event.mapQuery && (
+                                  {/* Map Navigation Button (Main) */}
+                                  {event.mapQuery && !event.backups && (
                                     <a 
                                       href={getMapUrl(event.mapQuery)}
                                       target="_blank"
@@ -287,18 +366,23 @@
                                       <Navigation size={16} />
                                     </a>
                                   )}
-
-                                  {(event.note || event.detail) && (
-                                    <div className="text-stone-300">
-                                      {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                                    </div>
+                                  {event.mapQuery && event.backups && (
+                                    <a 
+                                      href={getMapUrl(event.mapQuery)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="px-3 py-1 bg-rose-500 text-white text-xs font-bold rounded-full hover:bg-rose-600 transition-colors shadow-sm flex items-center gap-1"
+                                    >
+                                      首選 <Navigation size={12} />
+                                    </a>
                                   )}
                                 </div>
                               </div>
 
-                              {/* Expandable Details */}
+                              {/* Details - Always visible if content exists */}
                               {(event.note || event.detail) && (
-                                <div className={`mt-0 overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+                                <div className="mt-3">
                                   <div className={`text-sm p-3 rounded-xl flex gap-2 items-start
                                     ${event.noteType === 'warning' ? 'bg-orange-50 text-orange-700' : 
                                       event.noteType === 'tip' ? 'bg-yellow-50 text-yellow-700' : 
@@ -312,6 +396,34 @@
                                        {event.detail && <div className="mb-1 font-medium">{event.detail}</div>}
                                        {event.note && <div>{event.note}</div>}
                                     </div>
+                                  </div>
+                                </div>
+                              )}
+
+                              {/* Backups Section */}
+                              {event.backups && (
+                                <div className="mt-4 pt-3 border-t border-stone-100">
+                                  <p className="text-xs text-stone-400 font-medium mb-2 flex items-center gap-1">
+                                    <Star size={12} className="text-yellow-400" fill="currentColor"/>
+                                    排隊太多？試試這些備選：
+                                  </p>
+                                  <div className="space-y-2">
+                                    {event.backups.map((backup, bIndex) => (
+                                      <div key={bIndex} className="flex items-center justify-between bg-stone-50 p-2.5 rounded-xl">
+                                        <div className="min-w-0">
+                                          <p className="text-sm font-medium text-stone-700 truncate">{backup.name}</p>
+                                          <p className="text-xs text-stone-500 truncate">{backup.desc}</p>
+                                        </div>
+                                        <a 
+                                          href={getMapUrl(backup.query)}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="shrink-0 p-1.5 bg-white text-stone-400 rounded-lg hover:text-blue-500 hover:bg-blue-50 transition-colors border border-stone-200"
+                                        >
+                                          <Navigation size={14} />
+                                        </a>
+                                      </div>
+                                    ))}
                                   </div>
                                 </div>
                               )}
