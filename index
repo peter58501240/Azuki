@@ -1,0 +1,250 @@
+import React, { useState } from 'react';
+import { 
+  Plane, 
+  MapPin, 
+  Utensils, 
+  ShoppingBag, 
+  Coffee, 
+  Home, 
+  Camera, 
+  Info, 
+  AlertCircle, 
+  Clock, 
+  ChevronDown, 
+  ChevronUp,
+  Train,
+  Sun
+} from 'lucide-react';
+
+const ItineraryApp = () => {
+  const [activeDay, setActiveDay] = useState(1);
+  const [expandedItems, setExpandedItems] = useState({});
+
+  const toggleItem = (id) => {
+    setExpandedItems(prev => ({
+      ...prev,
+      [id]: !prev[id]
+    }));
+  };
+
+  const tripInfo = {
+    title: "岡山倉敷 5 天 4 夜．女子輕旅",
+    date: "2026/01/27 (二) ～ 01/31 (六)",
+    hotel: "VIA INN Okayama (岡山站直結)",
+    days: [
+      {
+        id: 1,
+        date: "01/27 (二)",
+        title: "抵達與拉麵",
+        events: [
+          { time: "14:35", title: "抵達岡山機場 (IT214)", icon: Plane, type: "transport" },
+          { time: "15:10", title: "利木津巴士 → 岡山站西口", subtitle: "約 30 分", icon: Train, type: "transport", 
+            note: "依時刻表發車，出關後直奔售票機買票 (備現金)", noteType: "warning" },
+          { time: "16:00", title: "VIA INN Check-in", subtitle: "車站樓上", icon: Home, type: "stay" },
+          { time: "17:00", title: "晚餐：小豆島拉麵 HISHIO", subtitle: "站前店", icon: Utensils, type: "food",
+            detail: "位置：岡山站「東口」對面，過馬路就到。" },
+          { time: "19:00", title: "散步：AEON Mall", subtitle: "超市買大罐水", icon: ShoppingBag, type: "activity" }
+        ]
+      },
+      {
+        id: 2,
+        date: "01/28 (三)",
+        title: "名園與燒肉",
+        events: [
+          { time: "08:30", title: "路面電車 (東山線) → 城下站", icon: Train, type: "transport" },
+          { time: "09:00", title: "後樂園 & 岡山城", icon: Camera, type: "activity",
+            note: "攻略：先逛庭園再進城，光線好、動線順。", noteType: "tip" },
+          { time: "12:30", title: "午餐：食堂 やまと (Yamato)", icon: Utensils, type: "food",
+            note: "停損點：排隊 >30 分 → 轉身去表町商店街吃別的。", noteType: "warning" },
+          { time: "14:00", title: "購物：表町商店街 & 天滿屋", icon: ShoppingBag, type: "activity" },
+          { time: "16:30", title: "休息：回 VIA INN 卸貨抬腿", icon: Home, type: "stay" },
+          { time: "18:30", title: "晚餐：燒肉 ひだや (Hidaya)", subtitle: "建議預約", icon: Utensils, type: "food" }
+        ]
+      },
+      {
+        id: 3,
+        date: "01/29 (四)",
+        title: "倉敷藝術 & Outlet",
+        events: [
+          { time: "09:30", title: "JR 山陽本線 → 倉敷站", icon: Train, type: "transport" },
+          { time: "10:00", title: "大原美術館", subtitle: "務必上午去", icon: Camera, type: "activity" },
+          { time: "11:15", title: "散策：倉敷美觀地區", icon: MapPin, type: "activity",
+            note: "注意：冬季平日遊船「高機率停駛」，平常心逛街。", noteType: "warning" },
+          { time: "12:30", title: "午餐：ふるいち 烏龍麵", icon: Utensils, type: "food" },
+          { time: "14:00", title: "購物：三井 Outlet", subtitle: "主戰場", icon: ShoppingBag, type: "activity" },
+          { time: "18:00", title: "補貨：Ario 1F 天滿屋超市", subtitle: "非伊藤洋華堂", icon: ShoppingBag, type: "activity" },
+          { time: "19:00", title: "晚餐：鳥貴族 或 居酒屋", subtitle: "回岡山吃", icon: Utensils, type: "food" }
+        ]
+      },
+      {
+        id: 4,
+        date: "01/30 (五)",
+        title: "採買 & 西口聖代",
+        events: [
+          { time: "10:30", title: "購物：Sansute 岡山", subtitle: "買吉備糰子伴手禮", icon: ShoppingBag, type: "activity" },
+          { time: "11:30", title: "午餐：博多天婦羅 Takao", subtitle: "AEON 6F", icon: Utensils, type: "food" },
+          { time: "13:30", title: "購物：AEON Mall", subtitle: "Uniqlo/無印 最後衝刺", icon: ShoppingBag, type: "activity" },
+          { time: "15:30", title: "午茶：觀音山水果聖代", icon: Coffee, type: "food",
+            detail: "關鍵：在岡山站「西口」(奉還町)，不在 AEON 裡！" },
+          { time: "18:30", title: "晚餐：J's苑 (燒肉) 或 壽司郎", icon: Utensils, type: "food" }
+        ]
+      },
+      {
+        id: 5,
+        date: "01/31 (六)",
+        title: "優雅回程",
+        events: [
+          { time: "10:00", title: "退房：行李寄放櫃台", icon: Home, type: "stay" },
+          { time: "10:30", title: "早午餐：站內咖啡廳", icon: Coffee, type: "food" },
+          { time: "11:30", title: "最後補漏", subtitle: "站內藥妝/地下街", icon: ShoppingBag, type: "activity" },
+          { time: "12:00", title: "前往西口 21 號乘車處", subtitle: "取行李後出發", icon: Train, type: "transport" },
+          { time: "12:30", title: "機場巴士 (最早能搭班次)", icon: Train, type: "transport" },
+          { time: "13:10", title: "機場 Check-in / 免稅店", icon: Plane, type: "transport" },
+          { time: "15:25", title: "起飛：IT215 平安回台", icon: Plane, type: "transport" }
+        ]
+      }
+    ]
+  };
+
+  const getTypeStyle = (type) => {
+    switch(type) {
+      case 'food': return 'bg-orange-50 text-orange-600 border-orange-100';
+      case 'transport': return 'bg-blue-50 text-blue-600 border-blue-100';
+      case 'stay': return 'bg-purple-50 text-purple-600 border-purple-100';
+      case 'activity': return 'bg-rose-50 text-rose-600 border-rose-100';
+      default: return 'bg-gray-50 text-gray-600 border-gray-100';
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#fffcf8] font-sans pb-10 text-stone-600">
+      {/* Header Image Area */}
+      <div className="relative h-48 bg-gradient-to-r from-rose-200 to-orange-100 flex flex-col justify-end p-6">
+        <div className="absolute top-0 right-0 p-4 opacity-20">
+          <Plane size={120} className="text-white" />
+        </div>
+        <h1 className="text-2xl font-bold text-stone-800 drop-shadow-sm mb-1">{tripInfo.title}</h1>
+        <div className="flex items-center gap-2 text-stone-700 text-sm bg-white/60 backdrop-blur-sm w-fit px-3 py-1 rounded-full">
+          <Clock size={14} />
+          <span>{tripInfo.date}</span>
+        </div>
+      </div>
+
+      {/* Hotel Info Card */}
+      <div className="px-4 -mt-6 relative z-10 mb-6">
+        <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 flex items-start gap-3">
+          <div className="bg-indigo-50 p-2.5 rounded-xl text-indigo-500 shrink-0">
+            <Home size={20} />
+          </div>
+          <div>
+            <p className="text-xs text-stone-400 font-medium uppercase tracking-wider">住宿地點</p>
+            <p className="font-medium text-stone-800">{tripInfo.hotel}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Day Tabs */}
+      <div className="sticky top-0 z-20 bg-[#fffcf8]/95 backdrop-blur-sm border-b border-stone-100 overflow-x-auto no-scrollbar pb-1">
+        <div className="flex px-4 gap-3 py-3 min-w-max">
+          {tripInfo.days.map((day) => (
+            <button
+              key={day.id}
+              onClick={() => setActiveDay(day.id)}
+              className={`flex flex-col items-center justify-center min-w-[70px] py-2 px-3 rounded-2xl transition-all duration-300 border
+                ${activeDay === day.id 
+                  ? 'bg-rose-400 text-white shadow-md shadow-rose-200 border-rose-400 transform scale-105' 
+                  : 'bg-white text-stone-400 border-stone-100 hover:bg-stone-50'}`}
+            >
+              <span className="text-xs font-medium opacity-90">Day {day.id}</span>
+              <span className="text-sm font-bold">{day.date.split(' ')[0]}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Timeline Content */}
+      <div className="px-4 py-6 max-w-2xl mx-auto">
+        {tripInfo.days.map((day) => (
+          <div key={day.id} className={`${activeDay === day.id ? 'block' : 'hidden'} animate-in fade-in slide-in-from-bottom-4 duration-300`}>
+            
+            <div className="flex items-center gap-2 mb-6 ml-2">
+              <Sun className="text-rose-400" size={20} />
+              <h2 className="text-xl font-bold text-stone-800">{day.title}</h2>
+            </div>
+
+            <div className="relative pl-4 border-l-2 border-stone-100 space-y-8">
+              {day.events.map((event, index) => {
+                const EventIcon = event.icon;
+                const isExpanded = expandedItems[`${day.id}-${index}`];
+                
+                return (
+                  <div key={index} className="relative pl-6">
+                    {/* Time Bubble */}
+                    <div className="absolute -left-[23px] top-0 bg-[#fffcf8] py-1">
+                       <div className={`w-3 h-3 rounded-full border-2 border-white ring-1 ring-stone-200 ${getTypeStyle(event.type).split(' ')[0].replace('bg-', 'bg-')}`}></div>
+                    </div>
+                    
+                    <div className="flex items-baseline gap-2 mb-1">
+                      <span className="font-mono text-sm font-bold text-rose-400">{event.time}</span>
+                    </div>
+
+                    {/* Card */}
+                    <div 
+                      onClick={() => (event.note || event.detail) && toggleItem(`${day.id}-${index}`)}
+                      className={`bg-white rounded-2xl p-4 border border-stone-100 shadow-sm transition-all active:scale-[0.99]
+                        ${(event.note || event.detail) ? 'cursor-pointer hover:shadow-md hover:border-rose-100' : ''}
+                      `}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2.5 rounded-xl shrink-0 ${getTypeStyle(event.type)}`}>
+                          <EventIcon size={18} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-medium text-stone-800 leading-tight mb-1">{event.title}</h3>
+                          {event.subtitle && <p className="text-sm text-stone-500">{event.subtitle}</p>}
+                        </div>
+                        {(event.note || event.detail) && (
+                          <div className="text-stone-300">
+                            {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Expandable Details */}
+                      {(event.note || event.detail) && (
+                        <div className={`mt-0 overflow-hidden transition-all duration-300 ${isExpanded ? 'max-h-40 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+                          <div className={`text-sm p-3 rounded-xl flex gap-2 items-start
+                            ${event.noteType === 'warning' ? 'bg-orange-50 text-orange-700' : 
+                              event.noteType === 'tip' ? 'bg-yellow-50 text-yellow-700' : 
+                              'bg-stone-50 text-stone-600'}
+                          `}>
+                            {event.noteType === 'warning' && <AlertCircle size={16} className="shrink-0 mt-0.5" />}
+                            {event.noteType === 'tip' && <Sun size={16} className="shrink-0 mt-0.5" />}
+                            {!event.noteType && <Info size={16} className="shrink-0 mt-0.5" />}
+                            
+                            <div className="flex-1">
+                               {event.detail && <div className="mb-1 font-medium">{event.detail}</div>}
+                               {event.note && <div>{event.note}</div>}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* End of Day Decor */}
+            <div className="mt-8 flex justify-center opacity-30">
+              <div className="w-16 h-1 bg-stone-200 rounded-full"></div>
+            </div>
+
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ItineraryApp;
