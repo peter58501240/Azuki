@@ -78,16 +78,16 @@
                   { time: "16:00", title: "VIA INN Check-in", subtitle: "車站樓上", icon: Home, type: "stay", mapQuery: "VIA INN Okayama" },
                   { 
                     time: "17:00", 
-                    title: "晚餐：小豆島拉麵 HISHIO", 
-                    subtitle: "站前店", 
+                    title: "晚餐：麵酒一照庵 岡山本店", 
+                    subtitle: "米其林推薦拉麵", 
                     icon: Utensils, 
                     type: "food",
-                    detail: "位置：岡山站「東口」對面，過馬路就到。",
-                    mapQuery: "小豆島拉麵 HISHIO 岡山站前店",
+                    detail: "精緻雞湯系拉麵，離車站約 15 分鐘路程。",
+                    mapQuery: "麵酒一照庵 岡山本店",
                     // 備選方案
                     backups: [
-                      { name: "隱岐之島拉麵", desc: "湯頭濃郁，評價極高", query: "隱岐の島ラーメン 岡山" },
-                      { name: "味司 野村", desc: "必吃多蜜醬豬排丼，老店", query: "味司 野村 岡山" }
+                      { name: "小豆島拉麵 HISHIO", desc: "站前店，位置方便", query: "小豆島拉麵 HISHIO 岡山站前店" },
+                      { name: "隱岐之島拉麵", desc: "湯頭濃郁，評價極高", query: "隱岐の島ラーメン 岡山" }
                     ]
                   },
                   { time: "19:00", title: "散步：AEON Mall", subtitle: "超市買大罐水", icon: ShoppingBag, type: "activity", mapQuery: "AEON MALL Okayama" }
@@ -103,16 +103,16 @@
                     note: "攻略：先逛庭園再進城，光線好、動線順。", noteType: "tip", mapQuery: "岡山後樂園" },
                   { 
                     time: "12:30", 
-                    title: "午餐：食堂 やまと", 
-                    subtitle: "人氣排隊店",
+                    title: "午餐：味司 野村", 
+                    subtitle: "米其林推薦醬汁豬排",
                     icon: Utensils, 
                     type: "food",
-                    note: "停損點：排隊 >30 分 → 轉身去表町商店街吃別的。", 
-                    noteType: "warning", 
-                    mapQuery: "食堂 やまと 岡山",
+                    note: "必吃多蜜醬豬排丼，岡山市區老店。", 
+                    noteType: "tip", 
+                    mapQuery: "味司 野村 岡山",
                     backups: [
-                      { name: "Cafe Moyau", desc: "河畔文青咖啡，氛圍超棒", query: "Cafe Moyau Okayama" },
-                      { name: "Cafe Antenna", desc: "後樂園旁，以聖代咖哩聞名", query: "Cafe Antenna Okayama" }
+                      { name: "食堂 やまと", desc: "人氣排隊店，中華拉麵", query: "食堂 やまと 岡山" },
+                      { name: "Cafe Moyau", desc: "河畔文青咖啡，氛圍超棒", query: "Cafe Moyau Okayama" }
                     ]
                   },
                   { time: "14:00", title: "購物：表町商店街 & 天滿屋", icon: ShoppingBag, type: "activity", mapQuery: "岡山 天滿屋" },
@@ -173,20 +173,33 @@
                 date: "01/30 (五)",
                 title: "採買 & 西口聖代",
                 events: [
-                  { time: "10:30", title: "購物：Sansute 岡山", subtitle: "買吉備糰子伴手禮", icon: ShoppingBag, type: "activity", mapQuery: "Sansute Okayama" },
+                  { time: "10:30", title: "PRESS BUTTER SAND", subtitle: "Sunste 岡山店", icon: ShoppingBag, type: "activity", mapQuery: "PRESS BUTTER SAND さんすて岡山店", detail: "位於車站連通 Sunste 南館 2F。" },
                   { 
                     time: "11:30", 
-                    title: "午餐：博多天婦羅 Takao", 
-                    subtitle: "AEON 6F", 
+                    title: "午餐：400℃ PIZZA", 
+                    subtitle: "杜の街 (米其林必比登)", 
                     icon: Utensils, 
                     type: "food", 
-                    mapQuery: "博多天婦羅 Takao 岡山",
+                    detail: "位於杜の街 Grace 內，超人氣披薩名店。",
+                    mapQuery: "400℃ PIZZA 杜の街",
                     backups: [
-                      { name: "牛舌 仙台邊見", desc: "AEON內，厚切牛舌", query: "Sendai Henmi Okayama AEON" },
-                      { name: "海鮮三崎港", desc: "新鮮迴轉壽司", query: "Kaisen Misakiko Okayama AEON" }
+                      { name: "博多天婦羅 Takao", desc: "AEON 6F，明太子吃到飽", query: "博多天婦羅 Takao 岡山" },
+                      { name: "牛舌 仙台邊見", desc: "AEON內，厚切牛舌", query: "Sendai Henmi Okayama AEON" }
                     ]
                   },
-                  { time: "13:30", title: "購物：AEON Mall", subtitle: "Uniqlo/無印 最後衝刺", icon: ShoppingBag, type: "activity", mapQuery: "AEON MALL Okayama" },
+                  { 
+                    time: "13:30", 
+                    title: "購物：Montbell 岡山店", 
+                    subtitle: "獨棟大型戶外用品", 
+                    icon: ShoppingBag, 
+                    type: "activity", 
+                    note: "位於南區下中野，離市區稍遠，建議計程車前往。",
+                    noteType: "warning",
+                    mapQuery: "Montbell Okayama",
+                    backups: [
+                      { name: "AEON Mall", desc: "Uniqlo/無印 最後衝刺", query: "AEON MALL Okayama" }
+                    ]
+                  },
                   { 
                     time: "15:30", 
                     title: "午茶：觀音山水果聖代", 
