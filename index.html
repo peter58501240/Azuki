@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>岡山倉敷 5 天 4 夜．輕旅</title>
+    <title>岡山倉敷輕旅手冊</title>
     
     <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -67,6 +67,7 @@
         const ChevronUp = (props) => <Icon {...props}><path d="m18 15-6-6-6 6"/></Icon>;
         const Train = (props) => <Icon {...props}><rect width="16" height="16" x="4" y="3" rx="2"/><path d="M4 11h16"/><path d="M12 3v8"/><path d="m8 19-2 3"/><path d="m18 22-2-3"/><path d="M8 15h0"/><path d="M16 15h0"/></Icon>;
         const Sun = (props) => <Icon {...props}><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></Icon>;
+        const Navigation = (props) => <Icon {...props}><polygon points="3 11 22 2 13 21 11 13 3 11"/></Icon>;
 
         // --- 主應用程式 ---
         const ItineraryApp = () => {
@@ -84,6 +85,7 @@
             title: "岡山倉敷 5 天 4 夜．輕旅",
             date: "2026/01/27 (二) ～ 01/31 (六)",
             hotel: "VIA INN Okayama (岡山站直結)",
+            hotelMapQuery: "VIA INN Okayama", // 飯店導航關鍵字
             days: [
               {
                 id: 1,
@@ -93,10 +95,10 @@
                   { time: "14:35", title: "抵達岡山機場 (IT214)", icon: Plane, type: "transport" },
                   { time: "15:10", title: "利木津巴士 → 岡山站西口", subtitle: "約 30 分", icon: Train, type: "transport", 
                     note: "依時刻表發車，出關後直奔售票機買票 (備現金)", noteType: "warning" },
-                  { time: "16:00", title: "VIA INN Check-in", subtitle: "車站樓上", icon: Home, type: "stay" },
+                  { time: "16:00", title: "VIA INN Check-in", subtitle: "車站樓上", icon: Home, type: "stay", mapQuery: "VIA INN Okayama" },
                   { time: "17:00", title: "晚餐：小豆島拉麵 HISHIO", subtitle: "站前店", icon: Utensils, type: "food",
-                    detail: "位置：岡山站「東口」對面，過馬路就到。" },
-                  { time: "19:00", title: "散步：AEON Mall", subtitle: "超市買大罐水", icon: ShoppingBag, type: "activity" }
+                    detail: "位置：岡山站「東口」對面，過馬路就到。", mapQuery: "小豆島拉麵 HISHIO 岡山站前店" },
+                  { time: "19:00", title: "散步：AEON Mall", subtitle: "超市買大罐水", icon: ShoppingBag, type: "activity", mapQuery: "AEON MALL Okayama" }
                 ]
               },
               {
@@ -104,14 +106,14 @@
                 date: "01/28 (三)",
                 title: "名園與燒肉",
                 events: [
-                  { time: "08:30", title: "路面電車 (東山線) → 城下站", icon: Train, type: "transport" },
+                  { time: "08:30", title: "路面電車 (東山線) → 城下站", icon: Train, type: "transport", mapQuery: "城下站 岡山" },
                   { time: "09:00", title: "後樂園 & 岡山城", icon: Camera, type: "activity",
-                    note: "攻略：先逛庭園再進城，光線好、動線順。", noteType: "tip" },
+                    note: "攻略：先逛庭園再進城，光線好、動線順。", noteType: "tip", mapQuery: "岡山後樂園" },
                   { time: "12:30", title: "午餐：食堂 やまと (Yamato)", icon: Utensils, type: "food",
-                    note: "停損點：排隊 >30 分 → 轉身去表町商店街吃別的。", noteType: "warning" },
-                  { time: "14:00", title: "購物：表町商店街 & 天滿屋", icon: ShoppingBag, type: "activity" },
-                  { time: "16:30", title: "休息：回 VIA INN 卸貨抬腿", icon: Home, type: "stay" },
-                  { time: "18:30", title: "晚餐：燒肉 ひだや (Hidaya)", subtitle: "建議預約", icon: Utensils, type: "food" }
+                    note: "停損點：排隊 >30 分 → 轉身去表町商店街吃別的。", noteType: "warning", mapQuery: "食堂 やまと 岡山" },
+                  { time: "14:00", title: "購物：表町商店街 & 天滿屋", icon: ShoppingBag, type: "activity", mapQuery: "岡山 天滿屋" },
+                  { time: "16:30", title: "休息：回 VIA INN 卸貨抬腿", icon: Home, type: "stay", mapQuery: "VIA INN Okayama" },
+                  { time: "18:30", title: "晚餐：燒肉 ひだや (Hidaya)", subtitle: "建議預約", icon: Utensils, type: "food", mapQuery: "燒肉 ひだや 本町店" }
                 ]
               },
               {
@@ -120,13 +122,13 @@
                 title: "倉敷藝術 & Outlet",
                 events: [
                   { time: "09:30", title: "JR 山陽本線 → 倉敷站", icon: Train, type: "transport" },
-                  { time: "10:00", title: "大原美術館", subtitle: "務必上午去", icon: Camera, type: "activity" },
+                  { time: "10:00", title: "大原美術館", subtitle: "務必上午去", icon: Camera, type: "activity", mapQuery: "大原美術館" },
                   { time: "11:15", title: "散策：倉敷美觀地區", icon: MapPin, type: "activity",
-                    note: "注意：冬季平日遊船「高機率停駛」，平常心逛街。", noteType: "warning" },
-                  { time: "12:30", title: "午餐：ふるいち 烏龍麵", icon: Utensils, type: "food" },
-                  { time: "14:00", title: "購物：三井 Outlet", subtitle: "主戰場", icon: ShoppingBag, type: "activity" },
-                  { time: "18:00", title: "補貨：Ario 1F 天滿屋超市", subtitle: "非伊藤洋華堂", icon: ShoppingBag, type: "activity" },
-                  { time: "19:00", title: "晚餐：鳥貴族 或 居酒屋", subtitle: "回岡山吃", icon: Utensils, type: "food" }
+                    note: "注意：冬季平日遊船「高機率停駛」，平常心逛街。", noteType: "warning", mapQuery: "倉敷美觀地區" },
+                  { time: "12:30", title: "午餐：ふるいち 烏龍麵", icon: Utensils, type: "food", mapQuery: "ふるいち 仲店 倉敷" },
+                  { time: "14:00", title: "購物：三井 Outlet", subtitle: "主戰場", icon: ShoppingBag, type: "activity", mapQuery: "三井 Outlet Park 倉敷" },
+                  { time: "18:00", title: "補貨：Ario 1F 天滿屋超市", subtitle: "非伊藤洋華堂", icon: ShoppingBag, type: "activity", mapQuery: "Ario 倉敷" },
+                  { time: "19:00", title: "晚餐：鳥貴族 或 居酒屋", subtitle: "回岡山吃", icon: Utensils, type: "food", mapQuery: "鳥貴族 岡山" }
                 ]
               },
               {
@@ -134,12 +136,12 @@
                 date: "01/30 (五)",
                 title: "採買 & 西口聖代",
                 events: [
-                  { time: "10:30", title: "購物：Sansute 岡山", subtitle: "買吉備糰子伴手禮", icon: ShoppingBag, type: "activity" },
-                  { time: "11:30", title: "午餐：博多天婦羅 Takao", subtitle: "AEON 6F", icon: Utensils, type: "food" },
-                  { time: "13:30", title: "購物：AEON Mall", subtitle: "Uniqlo/無印 最後衝刺", icon: ShoppingBag, type: "activity" },
+                  { time: "10:30", title: "購物：Sansute 岡山", subtitle: "買吉備糰子伴手禮", icon: ShoppingBag, type: "activity", mapQuery: "Sansute Okayama" },
+                  { time: "11:30", title: "午餐：博多天婦羅 Takao", subtitle: "AEON 6F", icon: Utensils, type: "food", mapQuery: "博多天婦羅 Takao 岡山" },
+                  { time: "13:30", title: "購物：AEON Mall", subtitle: "Uniqlo/無印 最後衝刺", icon: ShoppingBag, type: "activity", mapQuery: "AEON MALL Okayama" },
                   { time: "15:30", title: "午茶：觀音山水果聖代", icon: Coffee, type: "food",
-                    detail: "關鍵：在岡山站「西口」(奉還町)，不在 AEON 裡！" },
-                  { time: "18:30", title: "晚餐：J's苑 (燒肉) 或 壽司郎", icon: Utensils, type: "food" }
+                    detail: "關鍵：在岡山站「西口」(奉還町)，不在 AEON 裡！", mapQuery: "觀音山水果聖代 岡山" },
+                  { time: "18:30", title: "晚餐：J's苑 (燒肉) 或 壽司郎", icon: Utensils, type: "food", mapQuery: "Js苑 岡山" }
                 ]
               },
               {
@@ -148,9 +150,9 @@
                 title: "優雅回程",
                 events: [
                   { time: "10:00", title: "退房：行李寄放櫃台", icon: Home, type: "stay" },
-                  { time: "10:30", title: "早午餐：站內咖啡廳", icon: Coffee, type: "food" },
+                  { time: "10:30", title: "早午餐：站內咖啡廳", icon: Coffee, type: "food", mapQuery: "Vie de France 岡山" },
                   { time: "11:30", title: "最後補漏", subtitle: "站內藥妝/地下街", icon: ShoppingBag, type: "activity" },
-                  { time: "12:00", title: "前往西口 21 號乘車處", subtitle: "取行李後出發", icon: Train, type: "transport" },
+                  { time: "12:00", title: "前往西口 21 號乘車處", subtitle: "取行李後出發", icon: Train, type: "transport", mapQuery: "岡山站西口 巴士" },
                   { time: "12:30", title: "機場巴士 (最早能搭班次)", icon: Train, type: "transport" },
                   { time: "13:10", title: "機場 Check-in / 免稅店", icon: Plane, type: "transport" },
                   { time: "15:25", title: "起飛：IT215 平安回台", icon: Plane, type: "transport" }
@@ -169,6 +171,10 @@
             }
           };
 
+          const getMapUrl = (query) => {
+            return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+          };
+
           return (
             <div className="min-h-screen bg-[#fffcf8] font-sans pb-10 text-stone-600">
               {/* Header Image Area */}
@@ -185,14 +191,25 @@
 
               {/* Hotel Info Card */}
               <div className="px-4 -mt-6 relative z-10 mb-6">
-                <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 flex items-start gap-3">
-                  <div className="bg-indigo-50 p-2.5 rounded-xl text-indigo-500 shrink-0">
-                    <Home size={20} />
+                <div className="bg-white rounded-2xl shadow-sm border border-stone-100 p-4 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="bg-indigo-50 p-2.5 rounded-xl text-indigo-500 shrink-0">
+                      <Home size={20} />
+                    </div>
+                    <div>
+                      <p className="text-xs text-stone-400 font-medium uppercase tracking-wider">住宿地點</p>
+                      <p className="font-medium text-stone-800">{tripInfo.hotel}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-xs text-stone-400 font-medium uppercase tracking-wider">住宿地點</p>
-                    <p className="font-medium text-stone-800">{tripInfo.hotel}</p>
-                  </div>
+                  {/* Hotel Navigation Button */}
+                  <a 
+                    href={getMapUrl(tripInfo.hotelMapQuery)} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="p-3 bg-indigo-50 text-indigo-500 rounded-full hover:bg-indigo-100 transition-colors shadow-sm"
+                  >
+                    <Navigation size={20} />
+                  </a>
                 </div>
               </div>
 
@@ -256,11 +273,27 @@
                                   <h3 className="font-medium text-stone-800 leading-tight mb-1">{event.title}</h3>
                                   {event.subtitle && <p className="text-sm text-stone-500">{event.subtitle}</p>}
                                 </div>
-                                {(event.note || event.detail) && (
-                                  <div className="text-stone-300">
-                                    {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-                                  </div>
-                                )}
+                                
+                                <div className="flex items-center gap-2 shrink-0">
+                                  {/* Map Navigation Button */}
+                                  {event.mapQuery && (
+                                    <a 
+                                      href={getMapUrl(event.mapQuery)}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      onClick={(e) => e.stopPropagation()}
+                                      className="p-2 bg-blue-50 text-blue-500 rounded-full hover:bg-blue-100 transition-colors"
+                                    >
+                                      <Navigation size={16} />
+                                    </a>
+                                  )}
+
+                                  {(event.note || event.detail) && (
+                                    <div className="text-stone-300">
+                                      {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
 
                               {/* Expandable Details */}
